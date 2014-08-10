@@ -40,6 +40,7 @@ file_path = 'C:\\Users\\Jola\\Documents\\GitHub\\FTIR\\data\\'
 x, y = load_data(file_name, file_path)
 
 plt.figure(file_name_without_extension(file_name))
+plt.gca().invert_xaxis()
 plt.plot(x, y)
 plt.title(file_name_without_extension(file_name))
 plt.xlabel('Wavenumber [1/cm]')
