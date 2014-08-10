@@ -34,7 +34,7 @@ def image_name(file_name):
 
 ###############################################################################
 
-file_name = 'FTIR_ATR_After DSC 30-300C 10K-min_Hole_01.dpt'      
+file_name = 'FTIR_ATR_After DSC 30-300C 10K-min_Hole_02.dpt'      
 file_path = 'C:\\Users\\Jola\\Documents\\GitHub\\FTIR\\data\\'
 
 x, y = load_data(file_name, file_path)
