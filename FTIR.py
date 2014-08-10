@@ -34,17 +34,15 @@ def image_name(file_name):
 
 ###############################################################################
 
-file_name = '1A_200X_5kV_01a.csv'      
-file_path = 'C:\\Users\\Jola\\Desktop\\pd-dupa\\samples1_2_02072014\\EDX\\'
-x_limit = 10
+file_name = 'FTIR_ATR_After DSC 30-300C 10K-min_Hole_01.dpt'      
+file_path = 'C:\\Users\\Jola\\Documents\\GitHub\\FTIR\\data\\'
 
 x, y = load_data(file_name, file_path)
 
 plt.figure(file_name_without_extension(file_name))
-plt.plot(x/100, y)
+plt.plot(x, y)
 plt.title(file_name_without_extension(file_name))
-plt.xlabel('Energy [keV]')
-plt.ylabel('Intentity [Counts]')
-pylab.xlim([0,x_limit])
+plt.xlabel('Wavenumber [1/cm]')
+plt.ylabel('Intentity [Arb. units]')
 pylab.savefig(image_name(file_name))
 plt.show()
