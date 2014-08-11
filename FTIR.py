@@ -41,7 +41,7 @@ file_name = 'FTIR_ATR_After TGA 30-300C 10K-min_01.dpt'
 import os
 for name in os.listdir ('D:\\ATS\\klocek\\Documents\\GitHub\\FTIR\\data'):
     if name.endswith ('.dpt'):
-        #'print (name)
+        'print (name)
         
 a=[name for name in os.listdir(file_path) if name.endswith ('.dpt')]
 
