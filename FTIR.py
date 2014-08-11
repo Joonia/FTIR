@@ -44,21 +44,15 @@ for name in os.listdir (file_path):
 a=[name for name in os.listdir('D:\\ATS\\klocek\\Documents\\GitHub\\FTIR\\data') if name.endswith ('.dpt')]
 file_name = a[0]    
 
-x, y = load_data(file_name, file_path)
-
 for i in range (0, len(a)):
     file_name = a[i]
-    x = x[i]
-    y = y[i]
     x, y = load_data(file_name, file_path)
-    #plt.figure(file_name_without_extension(file_name))
     plt.figure('All plots')
-    #plt.gca().invert_xaxis()
     plt.plot (x, y)
-    
-    plt.xlabel('Wavenumber [1/cm]')
-    plt.ylabel('Intentity [Arb. units]')
 
+
+plt.xlabel('Wavenumber [1/cm]')
+plt.ylabel('Intentity [Arb. units]')
 plt.title('All plots')
 plt.gca().invert_xaxis()
 plt.grid()
