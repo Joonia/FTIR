@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sun Jul 27 21:15:45 2014
+Spyder Editor
 
-@author: Jola
+This temporary script file is located here:
+C:\Users\klocek\.spyder2\.temp.py
 """
-
 import numpy as np
 import matplotlib.pyplot as plt
 import pylab
@@ -34,17 +34,15 @@ def image_name(file_name):
 
 ###############################################################################
 
-file_path = 'D:\\ATS\\klocek\\Documents\\GitHub\\FTIR\\data\\'
-
-file_name = 'FTIR_ATR_After TGA 30-300C 10K-min_01.dpt'      
 
 import os
-for name in os.listdir ('D:\\ATS\\klocek\\Documents\\GitHub\\FTIR\\data'):
+file_path = 'D:\\ATS\\klocek\\Documents\\GitHub\\FTIR\\data\\'
+for name in os.listdir (file_path):
     if name.endswith ('.dpt'):
-        'print (name)
+        print (name)
         
-a=[name for name in os.listdir(file_path) if name.endswith ('.dpt')]
-
+a=[name for name in os.listdir('D:\\ATS\\klocek\\Documents\\GitHub\\FTIR\\data') if name.endswith ('.dpt')]
+file_name = a[0]    
 x, y = load_data(file_name, file_path)
 
 plt.figure(file_name_without_extension(file_name))
