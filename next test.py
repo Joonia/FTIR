@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sun Jul 27 21:15:45 2014
+Created on Mon Aug 11 09:19:58 2014
 
-@author: Jola
+@author: klocek
 """
 
 import numpy as np
@@ -33,6 +33,7 @@ def image_name(file_name):
    return file_name_without_extension(file_name) + '.png'
 
 ###############################################################################
+
 
 file_path = 'D:\\ATS\\klocek\\Documents\\GitHub\\FTIR\\data\\'
 
