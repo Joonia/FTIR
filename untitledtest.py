@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 """
+Created on Mon Aug 11 17:28:39 2014
+
+@author: klocek
+"""
+
+# -*- coding: utf-8 -*-
+"""
 Spyder Editor
 
 This temporary script file is located here:
@@ -42,25 +49,9 @@ for name in os.listdir (file_path):
         print (name)
         
 a=[name for name in os.listdir('D:\\ATS\\klocek\\Documents\\GitHub\\FTIR\\data') if name.endswith ('.dpt')]
-file_name = a[0]
-minima = []    
+file_name = a[0]    
 
-for i in range (0, len(a)):
-    file_name = a[i]
-    x, y = load_data(file_name, file_path)
-    minima.append(y.min())
-    plt.figure('All plots')
-    plt.plot (x, y)
+x, y = load_data(file_name, file_path)
 
-np_minima = np.asarray(minima)        # converts list to numpy array for .smin()
-print 'Main minimum', np_minima.min()
-plt.xlabel('Wavenumber [1/cm]')
-plt.ylabel('Intentity [Arb. units]')
-plt.title('All plots')
-plt.gca().invert_xaxis()
-plt.grid()
-pylab.savefig('All plots.png')
-plt.show()
-    
-   
 
+fig= plt.figure (x, y)
