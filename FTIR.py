@@ -44,13 +44,17 @@ for name in os.listdir (file_path):
 a=[name for name in os.listdir('D:\\ATS\\klocek\\Documents\\GitHub\\FTIR\\data') if name.endswith ('.dpt')]
 file_name = a[0]
 minima = []    
+maxima = []
 
 for i in range (0, len(a)):
     file_name = a[i]
     x, y = load_data(file_name, file_path)
     minima.append(y.min())
+    maxima.append(y.max())
+    y_norm = y / y.max()
     plt.figure('All plots')
-    plt.plot (x, y)
+    #plt.plot(x,y_norm)
+    plt.plot (x, y_norm-y_norm.min()+1*i)
 
 np_minima = np.asarray(minima)        # converts list to numpy array for .smin()
 print 'Main minimum', np_minima.min()
