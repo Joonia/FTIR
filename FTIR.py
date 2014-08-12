@@ -6,6 +6,7 @@ This temporary script file is located here:
 C:\Users\klocek\.spyder2\.temp.py
 """
 import numpy as np
+from scipy. integrate import simps, trapz
 import matplotlib.pyplot as plt
 import pylab
 
@@ -49,12 +50,14 @@ maxima = []
 for i in range (0, len(a)):
     file_name = a[i]
     x, y = load_data(file_name, file_path)
+    area=trapz(y)
     minima.append(y.min())
     maxima.append(y.max())
     y_norm = y / y.max()
     plt.figure('All plots')
     #plt.plot(x,y_norm)
     plt.plot (x, y_norm-y_norm.min()+1*i)
+    print area
 
 np_minima = np.asarray(minima)        # converts list to numpy array for .smin()
 print 'Main minimum', np_minima.min()
@@ -65,6 +68,11 @@ plt.gca().invert_xaxis()
 plt.grid()
 pylab.savefig('All plots.png')
 plt.show()
+
+    
+    
+    
+
     
    
 

@@ -64,7 +64,7 @@ plt.show()
 
 area = trapz (y)
 print area
-return area
+
 
 area1=simps(y)
 print area1
