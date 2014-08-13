@@ -129,10 +129,14 @@ a=[name for name in os.listdir('D:\\ATS\\klocek\\Documents\\GitHub\\FTIR\\data')
 file_name = a[0]
 minima = []    
 maxima = []
+x_list = []
+y_list = []
 
 for i in range (0, len(a)):
     file_name = a[i]
     x, y = load_data(file_name, file_path)
+    x_list.append(x)
+    y_list.append(y)
     area=trapz(y)
     minima.append(y.min())
     maxima.append(y.max())
