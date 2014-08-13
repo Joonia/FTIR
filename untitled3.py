@@ -1,19 +1,21 @@
 # -*- coding: utf-8 -*-
 """
-Spyder Editor
+Created on Wed Aug 13 22:49:32 2014
 
-This temporary script file is located here:
-C:\Users\klocek\.spyder2\.temp.py
+@author: klocek
 """
+
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Aug 12 13:31:40 2014
+
+@author: klocek
+"""
+import pylab as plt
 import numpy as np
-from scipy. integrate import simps, trapz
-import matplotlib.pyplot as plt
-import pylab
 from scipy.interpolate import splrep,splev
 import sys
 import os
-
-event_x = []
 
 def onclick(event):
     # when none of the toolbar buttons is activated and the user clicks in the
@@ -23,12 +25,9 @@ def onclick(event):
     # `feel` it when it gets clicked, set the `feel-radius` (picker) to 5 points
     toolbar = plt.get_current_fig_manager().toolbar
     if event.button==1 and toolbar.mode=='':
-        window = ((event.xdata-5)<=x) & (x<=(event.xdata+5))
-        #y2 = np.median(y[window])
-        #y2 = np.asarray(y)     
-        event_x.append(event.xdata)
-        plt.plot(event.xdata,event.ydata,'rs',ms=10,picker=5,label='cont_pnt')
-        print event.xdata
+        window = ((event.xdata-5)<=wave) & (wave<=(event.xdata+5))
+        y = np.median(flux[window])
+        plt.plot(event.xdata,y,'rs',ms=10,picker=5,label='cont_pnt')
     plt.draw()
 
 
@@ -41,7 +40,7 @@ def onpick(event):
     print ind
     print x
     print y
-    
+#    
 
 
 
@@ -64,8 +63,8 @@ def ontype(event):
         sort_array = np.argsort(cont_pnt_coord[:,0])
         x,y = cont_pnt_coord[sort_array].T
         spline = splrep(x,y,k=3)
-        continuum = splev(x,spline)
-        plt.plot(x,continuum,'r-',lw=2,label='continuum')
+        continuum = splev(wave,spline)
+        plt.plot(wave,continuum,'r-',lw=2,label='continuum')
 
     # when the user hits 'n' and a spline-continuum is fitted, normalise the
     # spectrum
@@ -77,12 +76,12 @@ def ontype(event):
                 break
         if continuum is not None:
             plt.cla()
-            plt.plot(x,y/continuum,'k-',label='normalised')
+            plt.plot(wave,flux/continuum,'k-',label='normalised')
 
     # when the user hits 'r': clear the axes and plot the original spectrum
     elif event.key=='r':
         plt.cla()
-        plt.plot(x,y,'k-')
+        plt.plot(wave,flux,'k-')
 
     # when the user hits 'w': if the normalised spectrum exists, write it to a
     # file.
@@ -90,77 +89,36 @@ def ontype(event):
         for artist in plt.gca().get_children():
             if hasattr(artist,'get_label') and artist.get_label()=='normalised':
                 data = np.array(artist.get_data())
-                #np.savetxt(os.path.splitext(filename)[0]+'.nspec',data.T)
+                np.savetxt(os.path.splitext(filename)[0]+'.nspec',data.T)
                 print('Saved to file')
                 break
     plt.draw()
 
 def load_data(file_name, file_path):
-   """
-   Loads data from the EDX csv file
-   :param file_name:
-   :param file_path:
-   :return: x_column, y_column raw data
-   """
+    """
+    Loads data from the EDX csv file
+    :param file_name:
+    :param file_path:
+    :return: x_column, y_column raw data
+    """
 
-   file_name_and_path = file_path + file_name
+    file_name_and_path = file_path + file_name
 
-   x_column, y_column = np.loadtxt(file_name_and_path, dtype=float, 
-                                   delimiter=',', skiprows=0,
-                                   usecols=(0, 1), unpack=True)
-   return x_column, y_column
-
-def file_name_without_extension(file_name):
-   dot_position = file_name.find('.')
-   return file_name[0:dot_position]
-
-def image_name(file_name):
-   return file_name_without_extension(file_name) + '.png'
-
-###############################################################################
-
-
-file_path = 'D:\\ATS\\klocek\\Documents\\GitHub\\FTIR\\data\\'
-for name in os.listdir (file_path):
-    if name.endswith ('.dpt'):
-        print (name)
-        
-a=[name for name in os.listdir('D:\\ATS\\klocek\\Documents\\GitHub\\FTIR\\data') if name.endswith ('.dpt')]
-file_name = a[0]
-minima = []    
-maxima = []
-
-for i in range (0, len(a)):
-    file_name = a[i]
-    x, y = load_data(file_name, file_path)
-    area=trapz(y)
-    minima.append(y.min())
-    maxima.append(y.max())
-    y_norm = y / y.max()
-    plt.figure('All plots')
-    #plt.plot(x,y_norm)
-    plt.plot (x, y_norm-y_norm.min()+1*i)
-    print area
-
-np_minima = np.asarray(minima)        # converts list to numpy array for .smin()
-print 'Main minimum', np_minima.min()
-plt.xlabel('Wavenumber [1/cm]')
-plt.ylabel('Intentity [Arb. units]')
-plt.title('All plots')
-plt.gca().invert_xaxis()
-plt.grid()
-pylab.savefig('All plots.png')
-
- # Connect the different functions to the different events
-plt.gcf().canvas.mpl_connect('key_press_event',ontype)
-plt.gcf().canvas.mpl_connect('button_press_event',onclick)
-plt.gcf().canvas.mpl_connect('pick_event',onpick) 
-plt.show()
-
+    x_column, y_column = np.loadtxt(file_name_and_path, dtype=float, delimiter=',', skiprows=0,
+                      usecols=(0, 1), unpack=True)
+    return x_column, y_column
     
+if __name__ == "__main__":
+    # Get the filename of the spectrum from the command line, and plot it
+    file_name = 'FTIR_ATR_After DSC 30-300C 10K-min_Hole_01.dpt'
+    file_path = 'D:\\ATS\\klocek\\Documents\\GitHub\\FTIR\\data\\'    
     
-    
+    filename = file_name
+    wave,flux = load_data(file_name, file_path)
+    spectrum, = plt.plot(wave,flux,'k-',label='spectrum')
+    plt.title(filename)
 
-    
-   
-
+    # Connect the different functions to the different events
+    plt.gcf().canvas.mpl_connect('key_press_event',ontype)
+    plt.gcf().canvas.mpl_connect('button_press_event',onclick)
+    plt.gcf().canvas.mpl_connect('pick_event',onpick) 
