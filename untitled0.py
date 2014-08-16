@@ -16,7 +16,7 @@ for name in os.listdir ('D:\\ATS\\klocek\\Documents\\GitHub\\FTIR\\data'):
     if name.endswith ('.dpt'):
         #'print (name)
         
-a=[name for name in os.listdir(file_path) if name.endswith ('.dpt')]
+        a=[name for name in os.listdir(file_path) if name.endswith ('.dpt')]
 
 x, y = load_data(file_name, file_path)
 
@@ -35,5 +35,4 @@ for name in os.listdir ('D:\\ATS\\klocek\\Documents\\GitHub\\FTIR\\data'):
     if name.endswith ('.dpt'):
         'print (name)
         
-a=[name for name in os.listdir(file_path) if name.endswith ('.dpt')]  
 

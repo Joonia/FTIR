@@ -12,6 +12,9 @@ import pylab
 from scipy.interpolate import splrep,splev
 import sys
 import os
+from matplotlib.widgets import Cursor
+
+
 
 event_x = []
 
@@ -146,6 +149,8 @@ for i in range (0, len(a)):
     plt.plot (x, y_norm-y_norm.min()+1*i)
     print area
 
+fig = plt.figure(figsize=(8, 6))
+ax = fig.add_subplot(111, axisbg='#FFFFCC')
 np_minima = np.asarray(minima)        # converts list to numpy array for .smin()
 print 'Main minimum', np_minima.min()
 plt.xlabel('Wavenumber [1/cm]')
@@ -159,6 +164,9 @@ pylab.savefig('All plots.png')
 plt.gcf().canvas.mpl_connect('key_press_event',ontype)
 plt.gcf().canvas.mpl_connect('button_press_event',onclick)
 plt.gcf().canvas.mpl_connect('pick_event',onpick) 
+
+cursor = Cursor(ax, useblit=True, color='red', linewidth=2 )
+
 plt.show()
 
     
