@@ -51,9 +51,14 @@ def switch_file_path():
     else:
         file_path = 'D:\\ATS\\klocek\\Documents\\GitHub\\FTIR\\data\\'
         return file_path
-
+        
+def onclick(event):
+    plt.plot(event.xdata,event.ydata,'rs',ms=2,picker=5,label='cont_pnt')
+    plt.axvline(x=event.xdata, visible=True)
+    print event.xdata
+    plt.draw()
+    
 ###############################################################################
-
 
 file_path = switch_file_path()
 file_names = find_file_names(file_path)
@@ -84,6 +89,7 @@ ax.grid()
 cursor = Cursor(ax, useblit=True, color='red', linewidth=2 )
 cursor.horizOn = False
 pylab.savefig('All plots.png')
+plt.gcf().canvas.mpl_connect('button_press_event',onclick)
 plt.show()
 
     
