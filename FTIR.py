@@ -72,8 +72,6 @@ def onclick(event):
 file_path = switch_file_path()
 file_names = find_file_names(file_path)
 
-counter = 0
-
 minima = []    
 maxima = []
 x_list = []
@@ -108,7 +106,7 @@ ax.invert_xaxis()
 ax.grid()
 cursor = Cursor(ax, useblit=True, color='red', linewidth=2 )
 cursor.horizOn = False
-pylab.savefig('All plots.png')
+#pylab.savefig('All plots.png')
 plt.gcf().canvas.mpl_connect('button_press_event',onclick)
 
 plt.show()
