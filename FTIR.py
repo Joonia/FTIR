@@ -9,6 +9,8 @@ import numpy as np
 from scipy. integrate import simps, trapz
 import matplotlib.pyplot as plt
 import pylab
+import os
+import platform
 
 
 def load_data(file_name, file_path):
@@ -33,22 +35,33 @@ def file_name_without_extension(file_name):
 def image_name(file_name):
    return file_name_without_extension(file_name) + '.png'
 
+
+def find_file_names(file_path):
+    for name in os.listdir (file_path):
+        if name.endswith ('.dpt'):
+            print (name)     
+    file_names=[name for name in os.listdir(file_path) if name.endswith ('.dpt')]
+    return file_names    
+ 
+def switch_file_path():
+    if platform.system() == 'Linux':
+        file_path = '/home/kolan/mycode/python/forks/FTIR/data/'
+        return file_path
+    else:
+        file_path = 'D:\\ATS\\klocek\\Documents\\GitHub\\FTIR\\data\\'
+        return file_path
+
 ###############################################################################
 
 
-import os
-file_path = 'D:\\ATS\\klocek\\Documents\\GitHub\\FTIR\\data\\'
-for name in os.listdir (file_path):
-    if name.endswith ('.dpt'):
-        print (name)
-        
-a=[name for name in os.listdir('D:\\ATS\\klocek\\Documents\\GitHub\\FTIR\\data') if name.endswith ('.dpt')]
-file_name = a[0]
+file_path = switch_file_path()
+file_names = find_file_names(file_path)
+
 minima = []    
 maxima = []
 
-for i in range (0, len(a)):
-    file_name = a[i]
+for i in range (0, len(file_names)):
+    file_name = file_names[i]
     x, y = load_data(file_name, file_path)
     area=trapz(y)
     minima.append(y.min())
