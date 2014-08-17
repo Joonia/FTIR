@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 import pylab
 import os
 import platform
+from matplotlib.widgets import Cursor
 
 
 def load_data(file_name, file_path):
@@ -60,6 +61,9 @@ file_names = find_file_names(file_path)
 minima = []    
 maxima = []
 
+fig = plt.figure(figsize=(8, 6))
+ax = fig.add_subplot(111, axisbg='#FFFFCC')
+
 for i in range (0, len(file_names)):
     file_name = file_names[i]
     x, y = load_data(file_name, file_path)
@@ -67,18 +71,18 @@ for i in range (0, len(file_names)):
     minima.append(y.min())
     maxima.append(y.max())
     y_norm = y / y.max()
-    plt.figure('All plots')
-    #plt.plot(x,y_norm)
-    plt.plot (x, y_norm-y_norm.min()+1*i)
+    ax.plot (x, y_norm-y_norm.min()+1*i)
     print area
 
 np_minima = np.asarray(minima)        # converts list to numpy array for .smin()
 print 'Main minimum', np_minima.min()
-plt.xlabel('Wavenumber [1/cm]')
-plt.ylabel('Intentity [Arb. units]')
-plt.title('All plots')
-plt.gca().invert_xaxis()
-plt.grid()
+ax.set_xlabel('Wavenumber [1/cm]')
+ax.set_ylabel('Intentity [Arb. units]')
+ax.set_title('All plots')
+ax.invert_xaxis()
+ax.grid()
+cursor = Cursor(ax, useblit=True, color='red', linewidth=2 )
+cursor.horizOn = False
 pylab.savefig('All plots.png')
 plt.show()
 
