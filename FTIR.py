@@ -51,27 +51,47 @@ def switch_file_path():
     else:
         file_path = 'D:\\ATS\\klocek\\Documents\\GitHub\\FTIR\\data\\'
         return file_path
+
+def transtate_value_to_index(i, event_xdata):
+    itemindex = np.where(x_list[i]<=event_xdata)
+    return itemindex[0][0]
         
 def onclick(event):
+    global number_of_files
     plt.plot(event.xdata,event.ydata,'rs',ms=2,picker=5,label='cont_pnt')
     plt.axvline(x=event.xdata, visible=True)
-    print event.xdata
+    x_event.append(event.xdata)
+    if x_event.__len__() == 2:
+        for i in range (0, number_of_files):
+            print trapz(y_list[i][transtate_value_to_index(i, x_event[0]):transtate_value_to_index(i, x_event[1])])
     plt.draw()
+    
     
 ###############################################################################
 
 file_path = switch_file_path()
 file_names = find_file_names(file_path)
 
+counter = 0
+
 minima = []    
 maxima = []
+x_list = []
+y_list = []
+area = []
+
+x_event = []
 
 fig = plt.figure(figsize=(8, 6))
-ax = fig.add_subplot(111, axisbg='#FFFFCC')
+ax = fig.add_subplot(111, axisbg='#FFFFFF')
 
-for i in range (0, len(file_names)):
+number_of_files = len(file_names)
+
+for i in range (0, number_of_files):
     file_name = file_names[i]
     x, y = load_data(file_name, file_path)
+    x_list.append(x)
+    y_list.append(y)
     area=trapz(y)
     minima.append(y.min())
     maxima.append(y.max())
@@ -90,6 +110,7 @@ cursor = Cursor(ax, useblit=True, color='red', linewidth=2 )
 cursor.horizOn = False
 pylab.savefig('All plots.png')
 plt.gcf().canvas.mpl_connect('button_press_event',onclick)
+
 plt.show()
 
     
