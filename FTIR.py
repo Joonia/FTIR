@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 import pylab
 import os
 import platform
+from matplotlib.widgets import Cursor
 
 
 def load_data(file_name, file_path):
@@ -80,6 +81,8 @@ ax.set_ylabel('Intentity [Arb. units]')
 ax.set_title('All plots')
 ax.invert_xaxis()
 ax.grid()
+cursor = Cursor(ax, useblit=True, color='red', linewidth=2 )
+cursor.horizOn = False
 pylab.savefig('All plots.png')
 plt.show()
 
