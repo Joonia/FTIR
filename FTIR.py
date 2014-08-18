@@ -61,9 +61,6 @@ def onclick(event):
     plt.plot(event.xdata,event.ydata,'rs',ms=2,picker=5,label='cont_pnt')
     plt.axvline(x=event.xdata, visible=True)
     x_event.append(event.xdata)
-    
-    temp = np.ones(0)
-    print temp
     templist = []
     
     if x_event.__len__() == 2:
