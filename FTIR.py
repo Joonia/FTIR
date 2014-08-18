@@ -94,7 +94,7 @@ for i in range (0, number_of_files):
     minima.append(y.min())
     maxima.append(y.max())
     y_norm = y / y.max()
-    ax.plot (x, y_norm-y_norm.min()+1*i)
+    ax.plot (x, y_norm-y_norm.min()+1*i, label=str(i) + '. ' + file_name)
     print area
 
 np_minima = np.asarray(minima)        # converts list to numpy array for .smin()
@@ -104,10 +104,17 @@ ax.set_ylabel('Intentity [Arb. units]')
 ax.set_title('All plots')
 ax.invert_xaxis()
 ax.grid()
+# Shrink current axis by 20%
+box = ax.get_position()
+ax.set_position([box.x0-0.07, box.y0, box.width * 0.8, box.height])
+# Put a legend to the right of the current axis
+ax.legend(loc='left', bbox_to_anchor=(1, 1.012), prop={'size':12})
+
 cursor = Cursor(ax, useblit=True, color='red', linewidth=2 )
 cursor.horizOn = False
 #pylab.savefig('All plots.png')
 plt.gcf().canvas.mpl_connect('button_press_event',onclick)
+#plt.legend(bbox_to_anchor=(1, 6),prop={'size':6})
 
 plt.show()
 
