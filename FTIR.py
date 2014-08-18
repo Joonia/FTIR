@@ -61,9 +61,25 @@ def onclick(event):
     plt.plot(event.xdata,event.ydata,'rs',ms=2,picker=5,label='cont_pnt')
     plt.axvline(x=event.xdata, visible=True)
     x_event.append(event.xdata)
+    
+    temp = np.ones(0)
+    print temp
+    templist = []
+    
     if x_event.__len__() == 2:
         for i in range (0, number_of_files):
-            print trapz(y_list[i][transtate_value_to_index(i, x_event[0]):transtate_value_to_index(i, x_event[1])])
+            templist.append(str(trapz(y_list[i][transtate_value_to_index(i, x_event[0]):transtate_value_to_index(i, x_event[1])])))
+            #templist.append('\n')
+        ax.annotate('Calculated areas:' +
+                '\n0. ' + str(templist[0]) + 
+                '\n1. ' + str(templist[1]) +
+                '\n2. ' + str(templist[2]) + 
+                '\n3. ' + str(templist[3]) +
+                '\n4. ' + str(templist[4]) +
+                '\n5. ' + str(templist[5]) + 
+                '\n6. ' + str(templist[6]) +
+                '\n7. ' + str(templist[7]), 
+                xy=(772,-300), xycoords='axes points', bbox=dict(boxstyle='square', fc='white', alpha=0.9))
     plt.draw()
     
     
@@ -108,13 +124,13 @@ ax.grid()
 box = ax.get_position()
 ax.set_position([box.x0-0.07, box.y0, box.width * 0.8, box.height])
 # Put a legend to the right of the current axis
-ax.legend(loc='left', bbox_to_anchor=(1, 1.012), prop={'size':12})
-
+ax.legend(loc='upper left', bbox_to_anchor=(1, 1.012), prop={'size':12})
 cursor = Cursor(ax, useblit=True, color='red', linewidth=2 )
 cursor.horizOn = False
 #pylab.savefig('All plots.png')
 plt.gcf().canvas.mpl_connect('button_press_event',onclick)
-#plt.legend(bbox_to_anchor=(1, 6),prop={'size':6})
+figManager = plt.get_current_fig_manager()
+figManager.window.showMaximized()
 
 plt.show()
 
