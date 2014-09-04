@@ -61,9 +61,22 @@ def onclick(event):
     plt.plot(event.xdata,event.ydata,'rs',ms=2,picker=5,label='cont_pnt')
     plt.axvline(x=event.xdata, visible=True)
     x_event.append(event.xdata)
+    templist = []
+    
     if x_event.__len__() == 2:
         for i in range (0, number_of_files):
-            print trapz(y_list[i][transtate_value_to_index(i, x_event[0]):transtate_value_to_index(i, x_event[1])])
+            templist.append(str(trapz(y_list[i][transtate_value_to_index(i, x_event[0]):transtate_value_to_index(i, x_event[1])])))
+            #templist.append('\n')
+        ax.annotate('Calculated areas:' +
+                '\n0. ' + str(templist[0]) + 
+                '\n1. ' + str(templist[1]) +
+                '\n2. ' + str(templist[2]) + 
+                '\n3. ' + str(templist[3]) +
+                '\n4. ' + str(templist[4]) +
+                '\n5. ' + str(templist[5]) + 
+                '\n6. ' + str(templist[6]) +
+                '\n7. ' + str(templist[7]), 
+                xy=(772,-300), xycoords='axes points', bbox=dict(boxstyle='square', fc='white', alpha=0.9))
     plt.draw()
     
     
@@ -94,7 +107,7 @@ for i in range (0, number_of_files):
     minima.append(y.min())
     maxima.append(y.max())
     y_norm = y / y.max()
-    ax.plot (x, y_norm-y_norm.min()+1*i)
+    ax.plot (x, y_norm-y_norm.min()+1*i, label=str(i) + '. ' + file_name)
     print area
 
 np_minima = np.asarray(minima)        # converts list to numpy array for .smin()
@@ -104,10 +117,17 @@ ax.set_ylabel('Intentity [Arb. units]')
 ax.set_title('All plots')
 ax.invert_xaxis()
 ax.grid()
+# Shrink current axis by 20%
+box = ax.get_position()
+ax.set_position([box.x0-0.07, box.y0, box.width * 0.8, box.height])
+# Put a legend to the right of the current axis
+ax.legend(loc='upper left', bbox_to_anchor=(1, 1.012), prop={'size':12})
 cursor = Cursor(ax, useblit=True, color='red', linewidth=2 )
 cursor.horizOn = False
 #pylab.savefig('All plots.png')
 plt.gcf().canvas.mpl_connect('button_press_event',onclick)
+figManager = plt.get_current_fig_manager()
+figManager.window.showMaximized()
 
 plt.show()
 
